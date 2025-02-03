@@ -4,7 +4,6 @@ import { useState } from "react";
 import InvestmentForm from "@/components/InvestmentForm";
 import InvestmentGraph from "@/components/InvestmentGraph";
 import { compoundInterest } from "@/utils/calculator";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const formatCurrency = (value: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -34,38 +33,40 @@ const Page = () => {
     setHigherValues(higherRateValues);
     setInterestRate(rate);
     
-    // Set final values
     setFinalValueUsd(baseValues[baseValues.length - 1]);
-    setFinalValueInr(baseValues[baseValues.length - 1] * 86); // Using fixed rate of 86
+    setFinalValueInr(baseValues[baseValues.length - 1] * 86);
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Investment Calculator</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
+    <div className="w-full min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold mb-6 text-center">Investment Calculator</h1>
+        
+        <div className="space-y-6">
           <InvestmentForm onCalculate={handleCalculate} />
+          
           {finalValueUsd > 0 && (
-            <Card className="mt-4">
-              <CardHeader>
-                <CardTitle>Final Investment Values</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <p>USD: {formatCurrency(finalValueUsd, 'USD')}</p>
-                <p>INR: {formatCurrency(finalValueInr, 'INR')}</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-        <div>
-          {values.length > 0 && (
-            <InvestmentGraph
-              years={years}
-              values={values}
-              lowerValues={lowerValues}
-              higherValues={higherValues}
-              baseRate={interestRate}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white p-4 rounded-lg shadow-sm">
+                <h2 className="text-lg font-medium mb-4">Final Values</h2>
+                <div className="space-y-2">
+                  <p className="text-sm">USD: {formatCurrency(finalValueUsd, 'USD')}</p>
+                  <p className="text-sm">INR: {formatCurrency(finalValueInr, 'INR')}</p>
+                </div>
+              </div>
+              
+              <div className="bg-white p-4 rounded-lg shadow-sm">
+                {values.length > 0 && (
+                  <InvestmentGraph
+                    years={years}
+                    values={values}
+                    lowerValues={lowerValues}
+                    higherValues={higherValues}
+                    baseRate={interestRate}
+                  />
+                )}
+              </div>
+            </div>
           )}
         </div>
       </div>
