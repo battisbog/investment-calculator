@@ -6,7 +6,7 @@ export function compoundInterest(
   ): number[] {
     const monthlyRate = (interestRate / 100) / 12;
     let balance = currentInvestment;
-    let yearlyValues = [balance];
+    const yearlyValues = [balance];
   
     for (let phaseIdx = 0; phaseIdx < phases.length; phaseIdx++) {
       const monthlyContribution = phaseContributions[phaseIdx] / 12;
