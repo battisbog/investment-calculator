@@ -56,16 +56,20 @@ const Page = () => {
               </div>
               
               <div className="bg-white p-4 rounded-lg shadow-sm">
-                {values.length > 0 && (
-                  <InvestmentGraph
-                    years={years}
-                    values={values}
-                    lowerValues={lowerValues}
-                    higherValues={higherValues}
-                    baseRate={interestRate}
-                  />
-                )}
-              </div>
+  {values.length > 0 && (
+    <div className="w-full h-[250px] sm:h-[400px] lg:h-[500px]"> {/* Adjust the height based on screen size */}
+      <InvestmentGraph
+        years={years}
+        values={values}
+        lowerValues={lowerValues}
+        higherValues={higherValues}
+        baseRate={interestRate}
+      />
+    </div>
+  )}
+</div>
+
+
             </div>
           )}
         </div>

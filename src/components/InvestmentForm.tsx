@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface InvestmentFormProps {
   onCalculate: (investment: number, rate: number, contributions: number[], phases: number[]) => void;
@@ -38,76 +41,88 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ onCalculate }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-4 p-4">
-      {/* Initial Values Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm mb-1">Initial Investment ($)</label>
-            <input
-              type="number"
-              value={currentInvestment}
-              onChange={(e) => setCurrentInvestment(Number(e.target.value))}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">Interest Rate (%)</label>
-            <input
-              type="number"
-              value={interestRate}
-              onChange={(e) => setInterestRate(Number(e.target.value))}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">USD to INR Rate</label>
-            <input
-              type="number"
-              value={usdToInr}
-              onChange={(e) => setUsdToInr(Number(e.target.value))}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Phases Section */}
-      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-        <h3 className="text-lg font-medium mb-4">Investment Phases</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {phases.map((phase, index) => (
-            <div key={index} className="space-y-3">
-              <h4 className="font-medium">Phase {index + 1}</h4>
-              <div>
-                <label className="block text-sm mb-1">Years</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={phase.years}
-                  onChange={(e) => handlePhaseChange(index, 'years', Number(e.target.value))}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label className="block text-sm mb-1">Annual $ Contribution</label>
-                <input
-                  type="number"
-                  value={phase.contribution}
-                  onChange={(e) => handlePhaseChange(index, 'contribution', Number(e.target.value))}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <Card>
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <Label htmlFor="initial">Initial Investment ($)</Label>
+              <Input
+                id="initial"
+                type="number"
+                value={currentInvestment}
+                onChange={(e) => setCurrentInvestment(Number(e.target.value))}
+              />
             </div>
-          ))}
-        </div>
-      </div>
+
+            <div>
+              <Label htmlFor="interest">Interest Rate (%)</Label>
+              <Input
+                id="interest"
+                type="number"
+                value={interestRate}
+                onChange={(e) => setInterestRate(Number(e.target.value))}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="usdRate">USD to INR Rate</Label>
+              <Input
+                id="usdRate"
+                type="number"
+                value={usdToInr}
+                onChange={(e) => setUsdToInr(Number(e.target.value))}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent className="pt-6">
+          <h3 className="text-lg font-medium mb-4">Investment Phases</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {phases.map((phase, index) => (
+              <div key={index} className="space-y-2 p-3 border rounded-lg bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium text-sm">Phase {index + 1}</h4>
+                </div>
+                <div className="space-y-2">
+                  <div>
+                    <Label htmlFor={`phase-${index}-years`} className="text-xs">
+                      Years
+                    </Label>
+                    <Input
+                      id={`phase-${index}-years`}
+                      type="number"
+                      min="1"
+                      value={phase.years}
+                      onChange={(e) => handlePhaseChange(index, 'years', Number(e.target.value))}
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor={`phase-${index}-contribution`} className="text-xs">
+                      Annual $ Contribution
+                    </Label>
+                    <Input
+                      id={`phase-${index}-contribution`}
+                      type="number"
+                      value={phase.contribution}
+                      onChange={(e) => handlePhaseChange(index, 'contribution', Number(e.target.value))}
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <button 
         type="submit" 
-        className="w-full bg-blue-600 text-white p-3 rounded-lg"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors"
       >
         Calculate Investment
       </button>
