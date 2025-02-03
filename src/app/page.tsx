@@ -55,9 +55,9 @@ const Page = () => {
                 </div>
               </div>
               
-              <div className="bg-white p-4 rounded-lg shadow-sm">
+              <div className="bg-white p-4 rounded-lg shadow-sm flex justify-center items-center">
   {values.length > 0 && (
-    <div className="w-full h-[250px] sm:h-[400px] lg:h-[500px]"> {/* Adjust the height based on screen size */}
+    <div className="w-full h-[250px] sm:h-[400px] lg:h-[500px] max-w-full">
       <InvestmentGraph
         years={years}
         values={values}
@@ -68,6 +68,7 @@ const Page = () => {
     </div>
   )}
 </div>
+
 
 
             </div>
